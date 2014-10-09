@@ -1,6 +1,7 @@
 from wsgiref.util import FileWrapper
 status_codes = {
-  200: 'OK'
+  200: 'OK',
+  403: 'Forbidden',
 }
 
 
@@ -25,8 +26,12 @@ def wsgi(webi_app):
         return environ['wsgi.file_wrapper'](body)
       elif hasattr(body, 'close') or not hasattr(body, '__iter__'):
         return FileWrapper(body)
-    elif isinstance(body[0], str):
+    elif isinstance(body, str):
       return [chunk.encode() for chunk in body]
+    else:
+      # string representation of other python types
+      return repr(body)
+
   return wsgi_app
 
 if __name__ == '__main__':
