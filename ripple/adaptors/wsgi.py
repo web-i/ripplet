@@ -13,7 +13,7 @@ def webi_2_wsgi_status(status):
   return '%d %s' % (status, status_codes[status])
 
 def wsgi(webi_app):
-  ''' a wsgi adaptor for webi '''
+  ''' webi to wsgi application adaptor '''
   def wsgi_app(environ, start_response):
     status, headers, body = webi_app(environ)
     start_response(webi_2_wsgi_status(status), [(header, value) for header, value in headers.items()])
