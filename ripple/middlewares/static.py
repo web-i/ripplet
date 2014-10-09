@@ -25,7 +25,6 @@ def static(public_dir='public'):
         uri += '.html'
       filename = os.path.abspath(os.path.join(root, uri.strip('/\\')))
       if uri.startswith(public_dir) or '..' in uri : return forbidden()
-#      if not os.path.exists(filename) or not os.path.isfile(filename): forbidden()
       try:
         file_handle = open(filename, 'rb')
         return success(file_handle)
