@@ -1,7 +1,7 @@
 ripple: a meta web framework for python
 ======
 
-`ripple` lets you write [link `webi`](https://github.com/web-i/webi) applications. It is a collection of `webi` middlewares, utilities and web server adaptors.
+`ripple` lets you write [`webi`](https://github.com/web-i/webi) applications. It is a collection of `webi` middlewares, utilities and web server adaptors.
 
 `ripple` takes everything it can from clojure's `ring`, perl's `plack`, python's `werkezeug` and ruby's `rack`.
 
