@@ -50,6 +50,6 @@ import ripple.middlewares
 def basic(environ):
   return 200, {'Content-Type': 'text/plain'}, 'a composed app'
 
-app =  builder(builder, ripple.middlewares.params, ripple.middlewares.file_info, ripple.middlewares.static)
+app =  builder(basic, ripple.middlewares.params, ripple.middlewares.file_info, ripple.middlewares.static)
 ```
 
