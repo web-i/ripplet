@@ -1,3 +1,4 @@
+''' a middleware to serve static files from a configured directory'''
 __all__ = ['static']
 
 import os
