@@ -1,3 +1,5 @@
+''' a composer to combine several middlewares for webi application '''
+
 import functools
 
 def builder(app, *middlewares):

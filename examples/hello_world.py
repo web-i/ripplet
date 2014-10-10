@@ -2,7 +2,6 @@
 A simple webi application, run by wsgi adaptor.
 '''
 
-
 def hello(environ):
   return 200, {'Content-Type': 'text/html'}, '<h3>Hello, from Ripple.</h3>'
 

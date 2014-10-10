@@ -1,3 +1,5 @@
+''' a wsgi adaptor for webi application '''
+
 from wsgiref.util import FileWrapper
 status_codes = {
   200: 'OK',
