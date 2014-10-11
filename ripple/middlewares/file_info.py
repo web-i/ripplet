@@ -12,3 +12,6 @@ def file_info(app):
       if mimetype: headers['Content-Type'] = mimetype
     return status, headers, body
   return file_info_app
+
+def file_info():
+  return middleware

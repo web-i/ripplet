@@ -32,7 +32,7 @@ def wsgi(webi_app):
       return [chunk.encode() for chunk in body]
     else:
       # string representation of other python types
-      return repr(body)
+      return [repr(body).encode()]
 
   return wsgi_app
 
