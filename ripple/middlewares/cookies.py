@@ -47,3 +47,4 @@ def cookies(expires='', domain=None, secure=False, httponly=False, path=None)
 
     return cookiesapp
 
+  return middleware
