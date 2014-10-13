@@ -19,7 +19,14 @@ def wsgi(webi_app):
   ''' webi to wsgi application adaptor '''
   def wsgi_app(environ, start_response):
     status, headers, body = webi_app(environ)
-    start_response(webi_2_wsgi_status(status), [(header, value) for header, value in headers.items()])
+    wsgi_headers = []
+    for header, value in headers.items():
+      if isinstance(value, list):
+        wsgi_headers += [(header, value_item) for value_item in value]
+      else:
+        wsgi_headers.append((header, value))
+    wsgi_status = webi_2_wsgi_status(status)
+    start_response(wsgi_status, wsgi_headers)
     if not body:
       if 'Content-Length' not in headers: headers['Content-Length'] = 0
       return []
@@ -33,7 +40,6 @@ def wsgi(webi_app):
     else:
       # string representation of other python types
       return [repr(body).encode()]
-
   return wsgi_app
 
 if __name__ == '__main__':
