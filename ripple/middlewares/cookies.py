@@ -1,6 +1,6 @@
 ''' middleware to parse cookies from request and make it available in env '''
 
-from http import cookies
+from http import cookies as http_cookies
 import urllib.parse
 import collections
 
@@ -17,7 +17,15 @@ class cookiedict(dict):
     self.dirty[key] = value
 
 
-def cookies(expires='', domain=None, secure=False, httponly=False, path=None)
+def cookies(expires='', domain=None, secure=False, httponly=False, path=None):
+
+  cookie_settings = {
+    'expires': expires,
+    'domain': domain,
+    'secure': secure,
+    'httponly': httponly,
+    'path': path
+  }
 
   def middleware(app):
 
@@ -29,16 +37,16 @@ def cookies(expires='', domain=None, secure=False, httponly=False, path=None)
       status, headers, body = app(environ)
       headers['Set-Cookie'] = []
       for name, value in environ['cookies'].getdirty().items():
-        morsel = cookies.Morsel()
-        if isinstance(value, str)
-          morsel.set(name, urllib.parse.quote(value))
+        morsel = http_cookies.Morsel()
+        if not isinstance(value, dict):
+          morsel.set(name, value, urllib.parse.quote(str(value)))
         else:
-          morsel.set(name, urllib.parse.quote(value.get('value')))
-          expires = value.get('expires', expires)
+          morsel.set(name, value, urllib.parse.quote(value.get('value')))
+          expires = value.get('expires', cookie_settings['expires'])
           morsel['expires'] = expires < 0 and -1000000000 or expires
-          morsel['path'] = value.get('path', cookie_path)
-          morsel['domain'] = value.get('domain', domain)
-          morsel['secure'] = value.get('secure', secure)
+          morsel['path'] = value.get('path', cookie_settings['path'])
+          morsel['domain'] = value.get('domain', cookie_settings['domain'])
+          morsel['secure'] = value.get('secure', cookie_settings['secure'])
         cookie_value = morsel.OutputString()
         if httponly:
           cookie_value += '; httponly'
